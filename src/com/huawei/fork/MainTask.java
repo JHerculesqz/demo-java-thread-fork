@@ -2,36 +2,39 @@ package com.huawei.fork;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.RecursiveTask;
 
-public class MainTask<T> extends RecursiveTask<T> {
+import com.huawei._1_fw.fork.MsMapTask;
+
+public class MainTask extends MsMapTask<String> {
 	// #region Fields
 
-	private static final long serialVersionUID = -7999298795162980055L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2135237580162083319L;
 
 	// #endregion
 
-	// #region compute
+	// #region computeEx
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected T compute() {
+	public String computeEx() {
 		String strRes = "";
 
 		// 1.map
-		List<SubTask<T>> lstSubTasks = new ArrayList<SubTask<T>>();
+		List<SubTask> lstSubTasks = new ArrayList<SubTask>();
 		for (int i = 0; i < 10; i++) {
-			SubTask<T> oSubTask = new SubTask<T>(i);
+			SubTask oSubTask = new SubTask(i);
 			lstSubTasks.add(oSubTask);
 			oSubTask.fork();
 		}
 
 		// 2.reduce
-		for (SubTask<T> oSubTask : lstSubTasks) {
+		for (SubTask oSubTask : lstSubTasks) {
 			strRes += oSubTask.join();
 		}
 
-		return (T) strRes;
+		return strRes;
 	}
 
 	// #endregion

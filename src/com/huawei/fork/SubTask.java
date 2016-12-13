@@ -1,15 +1,11 @@
 package com.huawei.fork;
 
-import java.util.concurrent.RecursiveTask;
+import com.huawei._1_fw.fork.MsMapTask;
 
-public class SubTask<T> extends RecursiveTask<T> {
-	// #region Const
+public class SubTask extends MsMapTask<String> {
+	// #region Fields
 
 	private static final long serialVersionUID = -7999298795162980055L;
-
-	// #endregion
-
-	// #region Fields
 
 	private int taskId;
 
@@ -33,17 +29,16 @@ public class SubTask<T> extends RecursiveTask<T> {
 
 	// #region compute
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected T compute() {
-		// try {
-		// Thread.sleep(1000);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
+	public String computeEx() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		String strRes = "Task_" + this.taskId + ";";
-		return (T) strRes;
+		return strRes;
 	}
 
 	// #endregion
